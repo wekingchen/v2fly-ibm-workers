@@ -22,32 +22,36 @@ jobs:
         touch `date +%Y%m%d%H%M%S`
         cat > config.json << EOF
         {
-          "inbounds": [
-            {
-              "port": 8080,
-              "protocol": "vmess",
-              "settings": {
-                "clients": [
-                  {
-                    "id": "${{ secrets.CF_UUID_IBM }}",
-                    "alterId": 64
-                  }
-                ]
-              },
-              "streamSettings": {
-                "network":"ws",
-                "wsSettings": {
-                  "path": "${{ secrets.CF_WSPATH_IBM }}"
+            "inbounds": [
+                {
+                    "port": 8080,
+                    "tag": "VLESS-in",
+                    "protocol": "VLESS",
+                    "settings": {
+                        "clients": [
+                            {
+                                "id": "${{ secrets.CF_UUID_IBM }}",
+                                "alterId": 0
+                            }
+                        ],
+                        "decryption": "none"
+                    },
+                    "streamSettings": {
+                        "network": "ws",
+                        "wsSettings": {
+                            "path": "${{ secrets.CF_WSPATH_IBM }}"
+                        }
+                    }
                 }
-              }
-            }
-          ],
-          "outbounds": [
-            {
-              "protocol": "freedom",
-              "settings": {}
-            }
-          ]
+            ],
+            "outbounds": [
+                {
+                    "protocol": "freedom",
+                    "settings": {
+                        
+                    }
+                }
+            ]
         }
         EOF
         
